@@ -77,7 +77,6 @@ typings/
 
 # next.js build output
 .next
-server/serviceAccountKey.json
 # nuxt.js build output
 .nuxt
 
