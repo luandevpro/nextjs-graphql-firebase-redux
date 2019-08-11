@@ -1,23 +1,26 @@
-import { useEffect } from 'react';
-import Button from '@material-ui/core/Button';
-import firebase, { providerGoogle } from '../lib/firebase';
+import PropTypes from 'prop-types';
 import withAuth from '../lib/withAuth';
+import withLayout from '../lib/withLayout';
+import checkLoggedIn from '../lib/checkLoggedIn';
+import withApolloClient from '../lib/withApolloClient';
 
-const Index = () => {
-  const handleLogin = () => {
-    firebase
-      .auth()
-      .signInWithPopup(providerGoogle)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
-  };
+const Index = ({ user }) => {
   return (
     <div style={{ textAlign: 'center', margin: '100px' }}>
-      <Button onClick={handleLogin}>Google</Button>
+      <h1>{user ? user.displayName : 'Login'}</h1>
     </div>
   );
 };
 
-export default withAuth(Index);
+export default withApolloClient(Index);
+
+Index.propTypes = {
+   user: PropTypes.object, // eslint-disable-line
+};
+
+Index.getInitialProps = async (context, apolloClient) => {
+  const { loggedInUser } = await checkLoggedIn(context, apolloClient);
+  return {
+    user: loggedInUser.users[0],
+  };
+};

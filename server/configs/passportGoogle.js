@@ -2,8 +2,8 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const passportJWT = require('passport-jwt');
 const jwt = require('jsonwebtoken');
 const { graphqlClient } = require('./graphqlClient');
-const { userByPk } = require('../../graphql/users/query');
-const { insertUsers } = require('../../graphql/users/mutation');
+const { userByPk } = require('../graphql/users/query');
+const { insertUsers } = require('../graphql/users/mutation');
 
 const JwtStrategy = passportJWT.Strategy;
 const { ExtractJwt } = passportJWT;
@@ -67,7 +67,7 @@ module.exports = (passport) => {
   );
   passport.use(
     new JwtStrategy(opts, (jwtpayload, done) => {
-      console.log(jwtpayload, done);
+      console.log(jwtpayload, done, 'ngon');
     }),
   );
 };

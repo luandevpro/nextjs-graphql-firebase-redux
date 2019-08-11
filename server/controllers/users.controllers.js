@@ -14,7 +14,7 @@ exports.showLoginGoogleCallback = async (req, res) => {
     signed: true,
     path: '/',
     domain: 'localhost',
-    expires: new Date(Date.now() + 900000),
+    expires: new Date(Date.now() + 9000000000000000),
     httpOnly: true,
   };
   await res.cookie('token', req.user.token, OPTION_COOKIES);
