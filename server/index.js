@@ -8,7 +8,7 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 const cookieParser = require('cookie-parser');
 const admin = require('firebase-admin');
-
+const passport = require('passport');
 const serviceAccount = require('./serviceAccountKey.json');
 const routes = require('./routes');
 
@@ -23,6 +23,7 @@ app
     const server = express();
     server.use(express.json());
     server.use(cookieParser('coder9s'));
+    server.use(passport.initialize());
     server.use('/', routes);
     server.get('*', (req, res) => handle(req, res));
 

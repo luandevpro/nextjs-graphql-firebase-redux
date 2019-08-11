@@ -7,6 +7,7 @@ module.exports = {
    },
    plugins: ['react', 'jsx-a11y', 'import', 'prettier'],
    rules: {
+      "camelcase": [2, {"properties": "never"}],
       "no-console": "off",
      'max-len': ['error', 100],
      'no-underscore-dangle': ['error', { allow: ['_id'] }],

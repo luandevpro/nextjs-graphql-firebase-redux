@@ -21,10 +21,3 @@ const Index = () => {
 };
 
 export default withAuth(Index);
-
-Index.getInitialProps = (ctx) => {
-  const user = ctx.req.signedCookies.token;
-  const messages = null;
-  console.log(user, 'index');
-  return { user, messages };
-};
