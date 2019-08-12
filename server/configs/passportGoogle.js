@@ -10,7 +10,7 @@ const { ExtractJwt } = passportJWT;
 
 const opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = '8d9177f1-922f-4777-9308-b09a4b10f783s';
+opts.secretOrKey = process.env.HASURA_GRAPHQL_JWT_SECRET_KEY;
 
 module.exports = (passport) => {
   passport.use(
@@ -36,10 +36,10 @@ module.exports = (passport) => {
               'x-hasura-user-id': user.userId.toString(),
             },
           },
-          '8d9177f1-922f-4777-9308-b09a4b10f783',
+          process.env.HASURA_GRAPHQL_JWT_SECRET_KEY,
           {
-            algorithm: 'HS256',
-            expiresIn: '15h',
+            algorithm: process.env.HASURA_GRAPHQL_JWT_SECRET_TYPE,
+            expiresIn: process.env.JWT_TOKEN_EXPIRES,
           },
         );
         graphqlClient
