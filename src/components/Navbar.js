@@ -31,9 +31,11 @@ export default function ButtonAppBar({ user }) {
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            Next
-          </Typography>
+          <Link href="/" prefetch>
+            <Typography variant="h6" className={classes.title}>
+              Next
+            </Typography>
+          </Link>
           {user ? (
             <Button color="inherit">{user.displayName}</Button>
           ) : (

@@ -9,7 +9,6 @@ exports.showLoginGoogle = (req, res, next) => {
 };
 
 exports.showLoginGoogleCallback = async (req, res) => {
-  console.log(req.user);
   const OPTION_COOKIES = {
     signed: true,
     path: '/',

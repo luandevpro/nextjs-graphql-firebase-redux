@@ -1,6 +1,6 @@
-// query client
+import gql from 'graphql-tag';
 
-const userByPk = `
+const userByPk = gql`
   query userByPk {
     users {
       createdAt

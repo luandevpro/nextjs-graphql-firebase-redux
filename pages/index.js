@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
-import withAuth from '../lib/withAuth';
 import withLayout from '../lib/withLayout';
-import checkLoggedIn from '../lib/checkLoggedIn';
-import withApolloClient from '../lib/withApolloClient';
+import withApollo from '../lib/withApollo';
 
 const Index = ({ user }) => {
   return (
@@ -12,15 +10,10 @@ const Index = ({ user }) => {
   );
 };
 
-export default withApolloClient(Index);
+export default withLayout(withApollo(Index));
 
 Index.propTypes = {
    user: PropTypes.object, // eslint-disable-line
 };
 
-Index.getInitialProps = async (context, apolloClient) => {
-  const { loggedInUser } = await checkLoggedIn(context, apolloClient);
-  return {
-    user: loggedInUser.users[0],
-  };
-};
+Index.getInitialProps = async () => {};

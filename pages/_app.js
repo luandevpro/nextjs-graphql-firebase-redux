@@ -2,7 +2,7 @@ import App, { Container } from 'next/app';
 import React from 'react';
 import { ApolloProvider } from 'react-apollo';
 import { ThemeProvider } from 'styled-components';
-import withApolloClient from '../lib/withApolloClient';
+import withApollo from '../lib/withApollo';
 import { theme } from '../lib/theme';
 
 class MyApp extends App {
@@ -24,4 +24,4 @@ class MyApp extends App {
   }
 }
 
-export default withApolloClient(MyApp);
+export default withApollo(MyApp);
