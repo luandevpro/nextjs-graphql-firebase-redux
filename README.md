@@ -14,3 +14,20 @@ GOGGLE_CLIENT_ID = '548210758981-gmc489ulfdmkaj3ogdhi27kpvmtpj.apps.googleuserco
 GOGGLE_CLIENT_SECRET = '0Rf5_FOFrKoriRrtuxU651'
 
 ```
+
+## Note write styled-components : && {}
+
+```
+
+const ButtonStyled = styled(Button)`
+  && {
+    background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
+    border: 0;
+    color: white;
+    height: 48px;
+    padding: 0 30px;
+    box-shadow: 0 3px 5px 2px rgba(255, 105, 135, 0.3);
+  }
+`;
+
+```

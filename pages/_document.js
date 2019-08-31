@@ -1,14 +1,47 @@
+import React from 'react';
 import Document, { Head, Main, NextScript } from 'next/document';
-import { ServerStyleSheets } from '@material-ui/styles';
 import { ServerStyleSheet } from 'styled-components';
-import getContext from '../lib/context';
+import { ServerStyleSheets } from '@material-ui/styles';
 
-export default class MyDocument extends Document {
+class MyDocument extends Document {
+  static async getInitialProps(ctx) {
+    const styledComponentsSheet = new ServerStyleSheet();
+    const materialSheets = new ServerStyleSheets();
+    const originalRenderPage = ctx.renderPage;
+
+    try {
+      ctx.renderPage = () =>
+        originalRenderPage({
+          enhanceApp: (App) => (props) =>
+            styledComponentsSheet.collectStyles(materialSheets.collect(<App {...props} />)),
+        });
+      const initialProps = await Document.getInitialProps(ctx);
+      return {
+        ...initialProps,
+        styles: (
+          <React.Fragment>
+            {initialProps.styles}
+            {materialSheets.getStyleElement()}
+            {styledComponentsSheet.getStyleElement()}
+          </React.Fragment>
+        ),
+      };
+    } finally {
+      styledComponentsSheet.seal();
+    }
+  }
+
   render() {
     return (
-      <html lang="vi">
-        <Head>{this.props.styleTags}</Head>
-        <Head>{this.props.styleTagsStyled}</Head>
+      <html lang="en" dir="ltr">
+        <Head>
+          <meta charSet="utf-8" />
+          {/* Use minimum-scale=1 to enable GPU rasterization */}
+          <meta
+            name="viewport"
+            content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
+          />
+        </Head>
         <body>
           <Main />
           <NextScript />
@@ -18,28 +51,4 @@ export default class MyDocument extends Document {
   }
 }
 
-MyDocument.getInitialProps = ({ renderPage }) => {
-  const pageContext = getContext();
-  const sheet = new ServerStyleSheets();
-  const sheetStyled = new ServerStyleSheet();
-  const page = renderPage((App) => (props) =>
-    sheet.collect(<App pageContext={pageContext} {...props} />),
-  );
-  const styleTags = sheet.getStyleElement();
-  const styleTagsStyled = sheetStyled.getStyleElement();
-  return {
-    ...page,
-    pageContext,
-    styleTags,
-    styleTagsStyled,
-    styles: (
-      <style
-        id="jss-server-side"
-        // eslint-disable-next-line
-        dangerouslySetInnerHTML={{
-          __html: pageContext.sheetsRegistry.toString(),
-        }}
-      />
-    ),
-  };
-};
+export default MyDocument;
