@@ -7,15 +7,8 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 const cookieParser = require('cookie-parser');
-const admin = require('firebase-admin');
 const passport = require('passport');
-const serviceAccount = require('./serviceAccountKey.json');
 const routes = require('./routes');
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://next-node-hasura-graphql.firebaseio.com',
-});
 
 app
   .prepare()
