@@ -22,15 +22,15 @@ class MyApp extends App {
       url,
     };
     return (
-      <ApolloProvider client={apolloClient}>
-        <ThemeMaterial theme={theme}>
+      <Container>
+        <ApolloProvider client={apolloClient}>
           <ThemeProvider theme={theme}>
-            <Container>
+            <ThemeMaterial theme={theme}>
               <Component {...newProps} />
-            </Container>
+            </ThemeMaterial>
           </ThemeProvider>
-        </ThemeMaterial>
-      </ApolloProvider>
+        </ApolloProvider>
+      </Container>
     );
   }
 }

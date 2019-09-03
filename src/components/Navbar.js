@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ButtonAppBar({ user }) {
   const classes = useStyles();
-
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -37,9 +36,11 @@ export default function ButtonAppBar({ user }) {
             </Typography>
           </Link>
           {user ? (
-            <Button color="inherit">{user.displayName}</Button>
+            <Link href="/profile">
+              <Button color="inherit">{user.displayName}</Button>
+            </Link>
           ) : (
-            <Link href="/auth/google">
+            <Link href="/login">
               <Button color="inherit">Login</Button>
             </Link>
           )}

@@ -16,7 +16,7 @@ router
     userController.showLoginGoogleCallback,
   );
 
-router.route('/api/login').post(userController.showToken);
+router.route('/logout').get(userController.logout);
 
 router.route('/api/upload').post(fileController.uploadSingle, fileController.uploadFile);
 
