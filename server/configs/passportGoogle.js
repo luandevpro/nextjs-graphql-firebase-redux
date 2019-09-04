@@ -23,7 +23,6 @@ module.exports = (passport) => {
       },
       (accessToken, refreshToken, profile, done) => {
         const user = {
-          userId: profile.id.toString(),
           displayName: profile.displayName,
           email: profile.emails[0].value,
           photoURL: profile.photos[0].value.replace('sz=50', 'sz=128'),

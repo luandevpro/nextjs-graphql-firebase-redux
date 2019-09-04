@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
+import { useRouter } from 'next/router';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ButtonAppBar({ user }) {
+  const router = useRouter();
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -40,9 +42,17 @@ export default function ButtonAppBar({ user }) {
               <Button color="inherit">{user.displayName}</Button>
             </Link>
           ) : (
-            <Link href="/login">
-              <Button color="inherit">Login</Button>
-            </Link>
+            <div>
+              {router.route === '/login' ? (
+                <Link href="/signup">
+                  <Button color="inherit">Signup</Button>
+                </Link>
+              ) : (
+                <Link href="/login">
+                  <Button color="inherit">Login</Button>
+                </Link>
+              )}
+            </div>
           )}
         </Toolbar>
       </AppBar>
