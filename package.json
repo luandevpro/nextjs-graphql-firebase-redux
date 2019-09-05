@@ -51,6 +51,7 @@
       "passport": "^0.4.0",
       "passport-google-oauth20": "^2.0.0",
       "passport-jwt": "^4.0.0",
+      "passport-local": "^1.0.0",
       "prop-types": "^15.7.2",
       "react": "^16.8.6",
       "react-apollo": "^2.5.8",

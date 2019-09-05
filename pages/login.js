@@ -26,7 +26,6 @@ function Index() {
   return (
     <div className={classes.margin}>
       <LoginFacebook />
-      <br />
       <LoginGoogle />
       <Grid container justify="center" className={classes.root}>
         <Login />

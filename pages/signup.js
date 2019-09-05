@@ -10,7 +10,6 @@ function Index(props) {
   return (
     <div>
       <LoginFacebook />
-      <br />
       <LoginGoogle />
       <Grid container justify="center">
         <Signup {...props} />

@@ -12,4 +12,11 @@ const userByPk = gql`
   }
 `;
 
-export { userByPk };
+const users = gql`
+  query users($email: String!) {
+    users(where: { email: { _eq: $email } }) {
+      userId
+    }
+  }
+`;
+export { userByPk, users };

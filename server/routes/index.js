@@ -9,6 +9,8 @@ require('../configs/passportGoogle')(passportGoogle);
 
 router.route('/auth/google').get(userController.showLoginGoogle);
 
+router.route('/auth/login').post(userController.login);
+
 router
   .route('/auth/google/callback')
   .get(

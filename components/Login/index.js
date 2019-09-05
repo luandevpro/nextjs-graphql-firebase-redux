@@ -1,11 +1,18 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Grid, Button } from '@material-ui/core';
+import axios from 'axios';
 import TextInput from '../SharedComponent/TextInput';
 
 export default function Login() {
   const handleSubmit = (values) => {
-    console.log(values);
+    axios({
+      url: '/auth/login',
+      method: 'POST',
+      data: values,
+    }).then((data) => {
+      console.log(data);
+    });
   };
   return (
     <Formik initialValues={{ email: '', password: '' }} onSubmit={handleSubmit}>

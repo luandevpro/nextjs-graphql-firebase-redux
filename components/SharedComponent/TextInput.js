@@ -3,11 +3,8 @@ import { TextField } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 
-const useStyles = makeStyles((theme) => ({
-  input: {
-    color: 'red',
-  },
-}));
+const useStyles = makeStyles(() => ({}));
+
 const TextInput = (props) => {
   const classes = useStyles();
   return (

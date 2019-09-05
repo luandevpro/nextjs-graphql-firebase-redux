@@ -9,3 +9,14 @@ exports.userByPk = `
       }
    }
 `;
+
+exports.users = `
+   query users($email: String!) {
+      users(where: { email: { _eq: $email } }) {
+         userId
+         displayName
+         email
+         password
+      }
+   }
+`;
