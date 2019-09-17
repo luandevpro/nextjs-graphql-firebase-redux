@@ -1,7 +1,7 @@
-# base node image
-FROM node:10
+# base alpine image
+FROM alpine
 
-WORKDIR /usr/src/app
+RUN apk add --update nodejs nodejs-npm
 
 ENV PORT 8080
 ENV HOST 0.0.0.0
