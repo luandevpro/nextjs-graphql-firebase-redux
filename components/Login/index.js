@@ -2,6 +2,7 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Grid, Button } from '@material-ui/core';
 import axios from 'axios';
+import Router from 'next/router';
 import TextInput from '../SharedComponent/TextInput';
 
 export default function Login() {
@@ -10,8 +11,10 @@ export default function Login() {
       url: '/auth/login',
       method: 'POST',
       data: values,
-    }).then((data) => {
-      console.log(data);
+    }).then(({ data }) => {
+      if (data.user) {
+        Router.push('/');
+      }
     });
   };
   return (
@@ -51,3 +54,7 @@ export default function Login() {
     </Formik>
   );
 }
+
+Login.getInitialProps = async () => {
+  return { isFromServer: true };
+};

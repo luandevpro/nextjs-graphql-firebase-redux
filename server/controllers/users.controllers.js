@@ -22,35 +22,42 @@ exports.showLoginGoogleCallback = async (req, res) => {
   return res.redirect('/');
 };
 
-exports.login = (req, res) => {
+exports.login = async (req, res) => {
   passportLocal.authenticate('local', { session: false }, (err, user, info) => {
     if (err || !user) {
-      return res.status(400).json({
+      return res.json({
         message: info ? info.message : 'Login failed',
         user,
       });
     }
     req.login(user, { session: false }, (errors) => {
       if (errors) {
-        res.send(err);
+        res.json({ error: errors });
       }
-      {
-        const payload = {
-          id: user._id,
-          email: user.email,
-        };
-        jwt.sign(
-          payload,
-          process.env.HASURA_GRAPHQL_JWT_SECRET_KEY,
-          { expiresIn: '1h' },
-          (error, token) => {
-            if (error) {
-              return res.json(err);
-            }
-            return res.json({ user, token });
+      const OPTION_COOKIES = {
+        signed: true,
+        path: '/',
+        domain: 'localhost',
+        expires: new Date(Date.now() + 9000000000000000),
+        httpOnly: true,
+      };
+      const token = jwt.sign(
+        {
+          'https://hasura.io/jwt/claims': {
+            'x-hasura-default-role': 'user',
+            'x-hasura-allowed-roles': ['user'],
+            'x-hasura-user-id': user.userId.toString(),
           },
-        );
-      }
+        },
+        process.env.HASURA_GRAPHQL_JWT_SECRET_KEY,
+        {
+          algorithm: process.env.HASURA_GRAPHQL_JWT_SECRET_TYPE,
+          expiresIn: process.env.JWT_TOKEN_EXPIRES,
+        },
+      );
+
+      res.cookie('token', token, OPTION_COOKIES);
+      return res.json({ user, token });
     });
   })(req, res);
 };

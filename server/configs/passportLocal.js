@@ -27,15 +27,13 @@ module.exports = (passport) => {
             if (data.users[0]) {
               bcrypt.compare(password, data.users[0].password).then((isMatched) => {
                 if (!isMatched) {
-                  console.log('sai pw');
-                  // return done(null, false, { message: 'Password incorrect' });
-                } else {
-                  console.log(data.users[0]);
+                  return done(null, false, { message: 'Password incorrect' });
                 }
-                //  return done(null, data.users[0]);
+                return done(null, data.users[0]);
               });
+            } else {
+              return done(null, false, { message: 'Incorrect username.' });
             }
-            return done(null, false, { message: 'Incorrect username.' });
           })
           .catch((error) => {
             console.log(error);

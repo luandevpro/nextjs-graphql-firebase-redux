@@ -3,7 +3,7 @@
    "version": "1.0.0",
    "main": "index.js",
    "scripts": {
-      "dev": "node server",
+      "dev": "nodemon server",
       "build": "next build",
       "start": "NODE_ENV=production node server",
       "lint": "eslint components pages lib"
