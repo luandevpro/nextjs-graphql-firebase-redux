@@ -15,6 +15,7 @@ export default function Login() {
       if (data.user) {
         Router.reload();
       }
+      console.log(data);
     });
   };
   return (

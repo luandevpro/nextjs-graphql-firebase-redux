@@ -1,4 +1,4 @@
-// config/passport-local.js
+// config/passportLocal.js
 const passportJWT = require('passport-jwt');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
@@ -25,12 +25,16 @@ module.exports = (passport) => {
           })
           .then((data) => {
             if (data.users[0]) {
-              bcrypt.compare(password, data.users[0].password).then((isMatched) => {
-                if (!isMatched) {
-                  return done(null, false, { message: 'Password incorrect' });
-                }
-                return done(null, data.users[0]);
-              });
+              if (data.users[0].password === null) {
+                done(null, false, { message: 'Password không chính xác' });
+              } else {
+                bcrypt.compare(password, data.users[0].password).then((isMatched) => {
+                  if (!isMatched) {
+                    return done(null, false, { message: 'Password không chính xác' });
+                  }
+                  return done(null, data.users[0]);
+                });
+              }
             } else {
               return done(null, false, { message: 'Incorrect username.' });
             }
