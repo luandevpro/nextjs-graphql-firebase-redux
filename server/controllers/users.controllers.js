@@ -1,26 +1,11 @@
-const passportGoogle = require('passport');
 const passportLocal = require('passport');
+const passportGoogle = require('passport');
+const passportFacebook = require('passport');
 const jwt = require('jsonwebtoken');
-require('../configs/passportGoogle')(passportGoogle);
+
 require('../configs/passportLocal')(passportLocal);
-
-exports.showLoginGoogle = (req, res, next) => {
-  passportGoogle.authenticate('google', {
-    scope: ['profile', 'email'],
-  })(req, res, next);
-};
-
-exports.showLoginGoogleCallback = async (req, res) => {
-  const OPTION_COOKIES = {
-    signed: true,
-    path: '/',
-    domain: 'localhost',
-    expires: new Date(Date.now() + 9000000000000000),
-    httpOnly: true,
-  };
-  await res.cookie('token', req.user.token, OPTION_COOKIES);
-  return res.redirect('/');
-};
+require('../configs/passportGoogle')(passportGoogle);
+require('../configs/passportFacebook')(passportFacebook);
 
 exports.login = async (req, res) => {
   passportLocal.authenticate('local', { session: false }, (err, user, info) => {
@@ -30,7 +15,7 @@ exports.login = async (req, res) => {
         user,
       });
     }
-    req.login(user, { session: false }, (errors) => {
+    return req.login(user, { session: false }, (errors) => {
       if (errors) {
         res.json({ error: errors });
       }
@@ -60,6 +45,40 @@ exports.login = async (req, res) => {
       return res.json({ user, token });
     });
   })(req, res);
+};
+
+exports.showLoginGoogle = (req, res, next) => {
+  passportGoogle.authenticate('google', {
+    scope: ['profile', 'email'],
+  })(req, res, next);
+};
+
+exports.showLoginGoogleCallback = async (req, res) => {
+  const OPTION_COOKIES = {
+    signed: true,
+    path: '/',
+    domain: 'localhost',
+    expires: new Date(Date.now() + 9000000000000000),
+    httpOnly: true,
+  };
+  await res.cookie('token', req.user.token, OPTION_COOKIES);
+  return res.redirect('/');
+};
+
+exports.showLoginFacebook = (req, res, next) => {
+  passportFacebook.authenticate('facebook', { scope: ['email'] })(req, res, next);
+};
+
+exports.showLoginFacebookCallback = async (req, res) => {
+  const OPTION_COOKIES = {
+    signed: true,
+    path: '/',
+    domain: 'localhost',
+    expires: new Date(Date.now() + 9000000000000000),
+    httpOnly: true,
+  };
+  await res.cookie('token', req.user.token, OPTION_COOKIES);
+  return res.redirect('/');
 };
 
 exports.logout = async (req, res) => {

@@ -1,5 +1,8 @@
 const express = require('express');
 const next = require('next');
+const fs = require('fs');
+const https = require('https');
+const path = require('path');
 
 require('dotenv').config();
 
@@ -21,10 +24,18 @@ app
     server.use('/', routes);
     server.get('*', (req, res) => handle(req, res));
 
-    server.listen(port, (err) => {
-      if (err) throw err;
-      console.log('> Ready on http://localhost:3000');
-    });
+    https
+      .createServer(
+        {
+          key: fs.readFileSync(path.resolve('../../server.key')),
+          cert: fs.readFileSync(path.resolve('../../server.cert')),
+        },
+        server,
+      )
+      .listen(port, (err) => {
+        if (err) throw err;
+        console.log('> Ready on https://localhost:8080');
+      });
   })
   .catch((ex) => {
     console.error(ex.stack);

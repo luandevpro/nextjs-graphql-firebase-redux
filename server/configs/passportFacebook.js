@@ -1,24 +1,17 @@
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const passportJWT = require('passport-jwt');
+const FacebookStrategy = require('passport-facebook').Strategy;
 const jwt = require('jsonwebtoken');
 const { graphqlClient } = require('./graphqlClient');
 const { users } = require('../graphql/users/query');
 const { insertUsers } = require('../graphql/users/mutation');
 
-const JwtStrategy = passportJWT.Strategy;
-const { ExtractJwt } = passportJWT;
-
-const opts = {};
-opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = process.env.HASURA_GRAPHQL_JWT_SECRET_KEY;
-
 module.exports = (passport) => {
   passport.use(
-    new GoogleStrategy(
+    new FacebookStrategy(
       {
-        clientID: process.env.GOGGLE_CLIENT_ID,
-        clientSecret: process.env.GOGGLE_CLIENT_SECRET,
-        callbackURL: '/auth/google/callback',
+        clientID: process.env.FACEBOOK_CLIENT_ID,
+        clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+        callbackURL: '/auth/facebook/callback',
+        profileFields: ['id', 'displayName', 'photos', 'email'],
         proxy: true,
       },
       (accessToken, refreshToken, profile, done) => {
@@ -70,10 +63,5 @@ module.exports = (passport) => {
           .catch((err) => console.log(err));
       },
     ),
-  );
-  passport.use(
-    new JwtStrategy(opts, (jwtpayload, done) => {
-      console.log(jwtpayload, done, 'ngon');
-    }),
   );
 };

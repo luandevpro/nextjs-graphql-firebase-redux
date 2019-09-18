@@ -4173,6 +4173,11 @@ https-proxy-agent@^2.2.1:
     agent-base "^4.3.0"
     debug "^3.1.0"
 
+https@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/https/-/https-1.0.0.tgz#3c37c7ae1a8eeb966904a2ad1e975a194b7ed3a4"
+  integrity sha1-PDfHrhqO65ZpBKKtHpdaGUt+06Q=
+
 hyphenate-style-name@^1.0.2, hyphenate-style-name@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.0.3.tgz#097bb7fa0b8f1a9cf0bd5c734cf95899981a9b48"
@@ -5978,6 +5983,13 @@ pascalcase@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
   integrity sha1-s2PlXoAGym/iF4TS2yK9FdeRfxQ=
+
+passport-facebook@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/passport-facebook/-/passport-facebook-3.0.0.tgz#b16f7314128be55d020a2b75f574c194bd6d9805"
+  integrity sha512-K/qNzuFsFISYAyC1Nma4qgY/12V3RSLFdFVsPKXiKZt434wOvthFW1p7zKa1iQihQMRhaWorVE1o3Vi1o+ZgeQ==
+  dependencies:
+    passport-oauth2 "1.x.x"
 
 passport-google-oauth20@^2.0.0:
   version "2.0.0"
