@@ -41,6 +41,27 @@ class MyDocument extends Document {
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
           />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <link rel="manifest" href="/static/manifest.json" />
+          <link rel="icon" type="png" sizes="192x192" href="/static/icon/icon-192x192.png" />
+          <link
+            rel="apple-touch-icon"
+            type="png"
+            sizes="192x192"
+            href="/static/icon/icon-192x192.png"
+          />
+          <link rel="icon" type="png" sizes="512x512" href="/static/icon/icon-512x512.png" />
+          <link
+            rel="apple-touch-icon"
+            type="png"
+            sizes="512x512"
+            href="/static/icon/icon-512x512.png"
+          />
+
+          <link rel="mask-icon" href="/static/favicon-mask.svg" color="#49B882" />
+
+          <meta name="theme-color" content="#fff" />
+
           <link rel="stylesheet" href="/static/css/nprogress.css" />
         </Head>
         <body>

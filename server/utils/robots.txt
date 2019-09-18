@@ -1,0 +1,6 @@
+User-agent: *
+
+Allow: /profile
+Disallow: /image/
+Disallow: /my_account*
+Disallow: */example/nextssr* 
