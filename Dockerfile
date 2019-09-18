@@ -3,8 +3,8 @@ FROM alpine
 
 RUN apk add --update nodejs nodejs-npm
 
-ENV PORT 8080
-ENV HOST 0.0.0.0
+ENV PORT 8080 \
+   HOST 0.0.0.0
 
 COPY package*.json ./
 
