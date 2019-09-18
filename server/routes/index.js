@@ -9,10 +9,10 @@ const router = express.Router();
 require('../configs/passportGoogle')(passportGoogle);
 require('../configs/passportFacebook')(passportFacebook);
 
+router.route('/auth/signup').post(userController.signup);
 router.route('/auth/login').post(userController.login);
 
 router.route('/auth/google').get(userController.showLoginGoogle);
-
 router
   .route('/auth/google/callback')
   .get(
@@ -21,7 +21,6 @@ router
   );
 
 router.route('/auth/facebook').get(userController.showLoginFacebook);
-
 router
   .route('/auth/facebook/callback')
   .get(

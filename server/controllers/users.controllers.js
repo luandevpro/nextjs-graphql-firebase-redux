@@ -2,10 +2,48 @@ const passportLocal = require('passport');
 const passportGoogle = require('passport');
 const passportFacebook = require('passport');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const { graphqlClient } = require('../configs/graphqlClient');
+const { users } = require('../graphql/users/query');
+const { insertUsers } = require('../graphql/users/mutation');
 
 require('../configs/passportLocal')(passportLocal);
 require('../configs/passportGoogle')(passportGoogle);
 require('../configs/passportFacebook')(passportFacebook);
+
+exports.signup = async (req, res) => {
+  const user = {
+    displayName: req.body.displayName,
+    email: req.body.email,
+    password: req.body.password,
+  };
+
+  const salt = bcrypt.genSaltSync(10);
+  const hashPassword = bcrypt.hashSync(user.password, salt);
+
+  graphqlClient
+    .request(users, {
+      email: user.email,
+    })
+    .then((data) => {
+      if (data.users[0]) {
+        return res.json({ message: 'Email đã tồn tại' });
+      }
+      return graphqlClient
+        .request(insertUsers, {
+          objects: [
+            {
+              displayName: user.displayName,
+              email: user.email,
+              password: hashPassword,
+            },
+          ],
+        })
+        .then(() => {
+          return res.json({ message: 'Đăng kí thành công' });
+        });
+    });
+};
 
 exports.login = async (req, res) => {
   passportLocal.authenticate('local', { session: false }, (err, user, info) => {

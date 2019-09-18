@@ -1,51 +1,30 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Grid, Button } from '@material-ui/core';
-import { useMutation } from '@apollo/react-hooks';
-import bcrypt from 'bcryptjs';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import TextInput from '../SharedComponent/TextInput';
-import { insertUsers } from '../../graphql/users/mutation';
-import { users } from '../../graphql/users/query';
 
-export default function Login({ apolloClient }) {
+export default function Login() {
   const router = useRouter();
-  const [insertUserId] = useMutation(insertUsers);
 
   const handleSubmit = (values) => {
-    const salt = bcrypt.genSaltSync(10);
-    const hashPassword = bcrypt.hashSync(values.password, salt);
-    // check email exist
-    apolloClient
-      .query({
-        query: users,
-        variables: {
-          email: values.email,
-        },
-      })
+    axios({
+      url: '/auth/signup',
+      method: 'POST',
+      data: {
+        displayName: values.name,
+        email: values.email,
+        password: values.password,
+      },
+    })
       .then(({ data }) => {
-        if (data.users[0]) {
-          console.log(data.users[0]);
-        } else {
-          insertUserId({
-            variables: {
-              objects: [
-                {
-                  email: values.email,
-                  password: hashPassword,
-                  displayName: values.name,
-                },
-              ],
-            },
-          })
-            .then(() => {
-              router.push('/login');
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
+        console.log(data);
+        router.push('/login');
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
   return (

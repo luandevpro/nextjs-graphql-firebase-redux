@@ -13,7 +13,7 @@ export default function Login() {
       data: values,
     }).then(({ data }) => {
       if (data.user) {
-        Router.push('/');
+        Router.reload();
       }
     });
   };
