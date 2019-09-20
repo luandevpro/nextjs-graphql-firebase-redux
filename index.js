@@ -3,6 +3,7 @@ const next = require('next');
 const { parse } = require('url');
 const { join } = require('path');
 const compression = require('compression');
+const helmet = require('helmet');
 
 require('dotenv').config();
 
@@ -19,8 +20,11 @@ app
   .prepare()
   .then(() => {
     const server = express();
+    // secure express server
+    server.use(helmet());
+    // nén
     server.use(compression());
-
+    // chạy service workers
     server.get('/service-worker.js', (req, res) => {
       const parsedUrl = parse(req.url, true);
       const { pathname } = parsedUrl;
@@ -31,11 +35,13 @@ app
         handle(req, res, parsedUrl);
       }
     });
-
+    // get request express v4
     server.use(express.json());
+    // secure jwt
     server.use(cookieParser('coder9s'));
+    // initial passport
     server.use(passport.initialize());
-
+    // create sitemap vs robots.txt
     sitemapAndRobots({ server });
 
     server.use('/', routes);
