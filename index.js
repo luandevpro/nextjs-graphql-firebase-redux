@@ -22,7 +22,7 @@ app
     const server = express();
     // secure express server
     server.use(helmet());
-    // nén
+    // nén file
     server.use(compression());
     // chạy service workers
     server.get('/service-worker.js', (req, res) => {
