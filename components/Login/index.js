@@ -2,7 +2,6 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Grid, Button } from '@material-ui/core';
 import axios from 'axios';
-import Router from 'next/router';
 import TextInput from '../SharedComponent/TextInput';
 
 export default function Login() {
@@ -13,7 +12,7 @@ export default function Login() {
       data: values,
     }).then(({ data }) => {
       if (data.user) {
-        Router.reload();
+        window.location.href = '/';
       }
       console.log(data);
     });
