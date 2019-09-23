@@ -1,4 +1,4 @@
-import App, { Container } from 'next/app';
+import App from 'next/app';
 import React from 'react';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { ThemeProvider } from 'styled-components';
@@ -22,15 +22,13 @@ class MyApp extends App {
       url,
     };
     return (
-      <Container>
-        <ApolloProvider client={apolloClient}>
-          <ThemeProvider theme={theme}>
-            <ThemeMaterial theme={theme}>
-              <Component {...newProps} />
-            </ThemeMaterial>
-          </ThemeProvider>
-        </ApolloProvider>
-      </Container>
+      <ApolloProvider client={apolloClient}>
+        <ThemeProvider theme={theme}>
+          <ThemeMaterial theme={theme}>
+            <Component {...newProps} />
+          </ThemeMaterial>
+        </ThemeProvider>
+      </ApolloProvider>
     );
   }
 }

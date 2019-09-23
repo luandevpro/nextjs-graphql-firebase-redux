@@ -1,12 +1,24 @@
 import PropTypes from 'prop-types';
 import { Grid, Avatar, Button } from '@material-ui/core';
 import Link from 'next/link';
+import { NextSeo } from 'next-seo';
 import withApollo from '../lib/withApollo';
 import withLayout from '../lib/withLayout';
 
 const Profile = ({ user }) => {
   return (
     <div>
+      <NextSeo
+        title={user.displayName}
+        description={user.displayName}
+        additionalMetaTags={[
+          {
+            name: 'keywords',
+            content: `${user.displayName}`,
+          },
+        ]}
+        canonical="http://localhost:8080/profile"
+      />
       <Grid container justify="center" alignItems="center">
         <Avatar src={user.photoURL} />
       </Grid>
