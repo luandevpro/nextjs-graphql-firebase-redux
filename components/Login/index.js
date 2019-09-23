@@ -2,7 +2,25 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Grid, Button } from '@material-ui/core';
 import axios from 'axios';
+import { makeStyles } from '@material-ui/core/styles';
 import TextInput from '../SharedComponent/TextInput';
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+  },
+  dense: {
+    marginTop: theme.spacing(2),
+  },
+  menu: {
+    width: 200,
+  },
+}));
 
 export default function Login() {
   const handleSubmit = (values) => {
