@@ -32,7 +32,7 @@ export default function ButtonAppBar({ user }) {
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
-          <Link href="/" prefetch>
+          <Link href="/">
             <Typography variant="h6" className={classes.title}>
               Next
             </Typography>
