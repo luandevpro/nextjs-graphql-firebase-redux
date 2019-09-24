@@ -1,4 +1,3 @@
-import React from 'react';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { ThemeProvider } from 'styled-components';
 import { ThemeProvider as ThemeMaterial } from '@material-ui/styles';
@@ -6,6 +5,7 @@ import { createStore, compose } from 'redux';
 import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
 import PropTypes from 'prop-types';
+import App from 'next/app';
 import withApollo from '../lib/withApollo';
 import { theme } from '../lib/theme';
 import reducers from '../reducers';
@@ -20,22 +20,21 @@ const makeStore = (initialState) => {
   return createStore(reducers, initialState, compose(devtools));
 };
 
-function MyApp({ Component, pageProps, apolloClient, url, store }) {
-  const newProps = {
-    ...pageProps,
-    url,
-  };
-  return (
-    <Provider store={store}>
-      <ApolloProvider client={apolloClient}>
-        <ThemeProvider theme={theme}>
-          <ThemeMaterial theme={theme}>
-            <Component {...newProps} />
-          </ThemeMaterial>
-        </ThemeProvider>
-      </ApolloProvider>
-    </Provider>
-  );
+class MyApp extends App {
+  render() {
+    const { Component, pageProps, apolloClient, url, store } = this.props;
+    return (
+      <Provider store={store}>
+        <ApolloProvider client={apolloClient}>
+          <ThemeProvider theme={theme}>
+            <ThemeMaterial theme={theme}>
+              <Component {...pageProps} {...url} />
+            </ThemeMaterial>
+          </ThemeProvider>
+        </ApolloProvider>
+      </Provider>
+    );
+  }
 }
 
 export default withRedux(makeStore)(withApollo(MyApp));
