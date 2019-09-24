@@ -23,7 +23,7 @@ app
     // secure express server
     server.use(helmet());
     // nén file
-    server.use(compression());
+    //  server.use(compression());
     // chạy service workers
     server.get('/service-worker.js', (req, res) => {
       const parsedUrl = parse(req.url, true);

@@ -9,6 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,9 +23,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ButtonAppBar({ user }) {
+export default function ButtonAppBar() {
   const router = useRouter();
   const classes = useStyles();
+  const currentUser = useSelector((state) => state.currentUser);
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -37,9 +39,9 @@ export default function ButtonAppBar({ user }) {
               Next
             </Typography>
           </Link>
-          {user ? (
+          {currentUser ? (
             <Link href="/profile">
-              <Button color="inherit">{user.displayName}</Button>
+              <Button color="inherit">{currentUser.displayName}</Button>
             </Link>
           ) : (
             <div>

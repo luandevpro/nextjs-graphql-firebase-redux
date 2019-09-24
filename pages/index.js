@@ -14,6 +14,11 @@ const Index = () => {
 
 export default withLayout(withApollo(Index, { loginRequired: false }));
 
+// Index.getInitialProps = async (ctx) => {
+//   console.log(ctx, 'helol');
+//   return { data: {} };
+// };
+
 Index.propTypes = {
    user: PropTypes.object, // eslint-disable-line
 };
