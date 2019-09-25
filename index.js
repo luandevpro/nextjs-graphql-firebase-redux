@@ -13,8 +13,16 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
+const admin = require('firebase-admin');
 const sitemapAndRobots = require('./server/utils/sitemapAndRobots');
 const routes = require('./server/routes');
+
+const serviceAccount = require('./serviceAccountKey.json');
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: 'https://nextjs-graphql-firebase-redux.firebaseio.com',
+});
 
 app
   .prepare()

@@ -16,7 +16,6 @@ exports.users = `
          userId
          displayName
          email
-         password
       }
    }
 `;
