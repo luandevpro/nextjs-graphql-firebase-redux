@@ -17,7 +17,7 @@ const admin = require('firebase-admin');
 const sitemapAndRobots = require('./server/utils/sitemapAndRobots');
 const routes = require('./server/routes');
 
-const serviceAccount = require('./serviceAccountKey.json');
+const serviceAccount = require('./lib/serviceAccountKey.json');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),

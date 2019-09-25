@@ -1,13 +1,25 @@
 import PropTypes from 'prop-types';
 import { Grid, Avatar, Button } from '@material-ui/core';
-import Link from 'next/link';
 import { NextSeo } from 'next-seo';
 import { useSelector } from 'react-redux';
+import Axios from 'axios';
 import withApollo from '../lib/withApollo';
 import withLayout from '../lib/withLayout';
+import { auth } from '../lib/firebase';
 
 const Profile = () => {
   const currentUser = useSelector((state) => state.currentUser);
+  const handleLogout = () => {
+    auth.signOut().then(() => {
+      Axios({
+        method: 'GET',
+        url: '/auth/logout',
+        data: null,
+      }).then(() => {
+        window.location.href = '/login';
+      });
+    });
+  };
   return (
     <div>
       <NextSeo
@@ -28,9 +40,7 @@ const Profile = () => {
         <h1 style={{ color: 'black' }}>{currentUser.displayName}</h1>
       </Grid>
       <Grid container justify="center" alignItems="center">
-        <Link href="/logout">
-          <Button>Logout</Button>
-        </Link>
+        <Button onClick={handleLogout}>Logout</Button>
       </Grid>
     </div>
   );

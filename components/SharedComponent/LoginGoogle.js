@@ -3,7 +3,6 @@ import { Grid, ListItemIcon, Avatar, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
-import Router from 'next/router';
 import { ListItemStyled } from '../SharedStyled/ListItemStyled';
 import { auth, providerGoogle, database } from '../../lib/firebase';
 
