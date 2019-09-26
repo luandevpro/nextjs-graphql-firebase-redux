@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { ListItemStyled } from '../SharedStyled/ListItemStyled';
-import { auth, providerFacebook, database } from '../../lib/firebase';
+import { auth, providerFacebook, providerGoogle, database } from '../../lib/firebase';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -35,8 +35,10 @@ export default function LoginFacebook() {
       })
       .catch((err) => {
         if (err.message === errorLogin) {
-          auth.signInWithCredential(err.credential).then(() => {
-            console.log('login');
+          auth.signInWithPopup(providerGoogle).then(() => {
+            auth.currentUser.getIdToken(true).catch((error) => {
+              console.log(error);
+            });
           });
           console.log(err, 'err');
         }

@@ -1,40 +1,42 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Grid, Button } from '@material-ui/core';
 import axios from 'axios';
-import { makeStyles } from '@material-ui/core/styles';
 import TextInput from '../SharedComponent/TextInput';
-
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-  },
-  dense: {
-    marginTop: theme.spacing(2),
-  },
-  menu: {
-    width: 200,
-  },
-}));
+import { auth, database } from '../../lib/firebase';
 
 export default function Login() {
   const handleSubmit = (values) => {
-    axios({
-      url: '/auth/login',
-      method: 'POST',
-      data: values,
-    }).then(({ data }) => {
-      if (data.user) {
-        window.location.href = '/';
-      }
-      console.log(data);
-    });
+    auth.signInWithEmailAndPassword(values.email, values.password);
   };
+  useEffect(
+    () =>
+      auth.onAuthStateChanged(async (user) => {
+        if (user) {
+          const metadataRef = await database.ref(`metadata/${user.uid}/refreshTime`);
+          const callback = async () => {
+            const token = await user.getIdToken(true);
+            const idTokenResult = await user.getIdTokenResult();
+            const hasuraClaim = await idTokenResult.claims['https://hasura.io/jwt/claims'];
+            if (hasuraClaim) {
+              axios({
+                method: 'POST',
+                url: '/auth/login',
+                data: {
+                  token,
+                },
+              }).then(({ data }) => {
+                if (data.token) {
+                  window.location.href = '/';
+                }
+              });
+            }
+          };
+          metadataRef.on('value', callback);
+        }
+      }),
+    [],
+  );
   return (
     <Formik initialValues={{ email: '', password: '' }} onSubmit={handleSubmit}>
       {() => (
