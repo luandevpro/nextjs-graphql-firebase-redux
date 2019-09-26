@@ -34,4 +34,4 @@ function Index() {
   );
 }
 
-export default withLayout(withApollo(Index, { logoutRequired: false }));
+export default withLayout(withApollo(Index, { logoutRequired: true }));

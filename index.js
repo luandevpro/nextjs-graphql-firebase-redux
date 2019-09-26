@@ -12,7 +12,6 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 const cookieParser = require('cookie-parser');
-const passport = require('passport');
 const admin = require('firebase-admin');
 const sitemapAndRobots = require('./server/utils/sitemapAndRobots');
 const routes = require('./server/routes');
@@ -45,10 +44,9 @@ app
     });
     // get request express v4
     server.use(express.json());
-    // secure jwt
+    // secure cookie
     server.use(cookieParser('coder9s'));
     // initial passport
-    server.use(passport.initialize());
     // create sitemap vs robots.txt
     sitemapAndRobots({ server });
 

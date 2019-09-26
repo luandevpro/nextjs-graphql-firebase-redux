@@ -7,7 +7,14 @@ exports.login = async (req, res) => {
     .verifyIdToken(req.body.token)
     .then((decodedToken) => {
       if (decodedToken) {
-        res.cookie('token', token);
+        const OPTION_COOKIES = {
+          signed: true,
+          path: '/',
+          domain: 'localhost',
+          expires: 60 * 60 * 1000,
+          httpOnly: true,
+        };
+        res.cookie('token', token, OPTION_COOKIES);
         res.json({ token });
       }
     })

@@ -1,7 +1,6 @@
 import { ERROR_ACCOUNT_EXIST } from '../constants/ActionTypes';
 
-const initialState =
-  'An account already exists with the same email address but different sign-in credentials. Sign in using a provider associated with this email address.'; // eslint-disable-line
+const initialState = 'auth/account-exists-with-different-credential';
 
 const useErrorLogin = (state = initialState, action) => {
   switch (action.type) {
