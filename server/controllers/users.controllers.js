@@ -11,7 +11,7 @@ exports.login = async (req, res) => {
           signed: true,
           path: '/',
           domain: 'localhost',
-          expires: 60 * 60 * 1000,
+          maxAge: 60 * 60 * 1000,
           httpOnly: true,
         };
         res.cookie('token', token, OPTION_COOKIES);

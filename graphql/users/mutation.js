@@ -8,6 +8,7 @@ const insertUsers = gql`
         userId
         photoURL
         displayName
+        admin
       }
     }
   }

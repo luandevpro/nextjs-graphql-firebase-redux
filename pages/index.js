@@ -4,10 +4,21 @@ import withApollo from '../lib/withApollo';
 import withLayout from '../lib/withLayout';
 
 const Index = () => {
-  const useCurrentUser = useSelector((state) => state.currentUser);
+  const userCurrentUser = useSelector((state) => state.currentUser);
   return (
     <div style={{ textAlign: 'center', color: 'black' }}>
-      {useCurrentUser ? <h1>{useCurrentUser.displayName}</h1> : <h1>Login</h1>}
+      {userCurrentUser ? (
+        <div>
+          <h1>{userCurrentUser.displayName}</h1>
+          <p>
+            <span>admin</span>
+            <span>:</span>
+            <span>{userCurrentUser.admin === true ? 'true' : 'false'}</span>
+          </p>
+        </div>
+      ) : (
+        <h1>Login</h1>
+      )}
     </div>
   );
 };
