@@ -32,7 +32,9 @@ function Index() {
         <Login />
       </Grid>
       <Grid container justify="center" className={classes.root}>
-        <Link href="/account/recovery">Quên mật khẩu ?</Link>
+        <Link href="/account/recovery">
+          <a>Quên mật khẩu ?</a>
+        </Link>
       </Grid>
     </div>
   );
