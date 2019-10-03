@@ -3,7 +3,7 @@ import { Grid, ListItemIcon, Avatar, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { ListItemStyled } from '../SharedStyled/ListItemStyled';
-import { auth, providerGoogle } from '../../lib/firebase';
+import { auth, providerGoogle } from '../../../lib/firebase';
 
 const useStyles = makeStyles(() => ({
   root: {

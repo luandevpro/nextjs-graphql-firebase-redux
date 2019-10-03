@@ -3,9 +3,9 @@ import { Grid, Avatar, Button } from '@material-ui/core';
 import { NextSeo } from 'next-seo';
 import { useSelector } from 'react-redux';
 import Axios from 'axios';
-import withApollo from '../lib/withApollo';
-import withLayout from '../lib/withLayout';
-import { auth } from '../lib/firebase';
+import withApollo from '../../lib/withApollo';
+import withLayout from '../../lib/withLayout';
+import { auth } from '../../lib/firebase';
 
 const Profile = () => {
   const currentUser = useSelector((state) => state.currentUser);
@@ -16,7 +16,7 @@ const Profile = () => {
         url: '/auth/logout',
         data: null,
       }).then(() => {
-        window.location.href = '/login';
+        window.location.href = '/account/login';
       });
     });
   };

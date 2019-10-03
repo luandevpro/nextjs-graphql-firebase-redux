@@ -20,9 +20,10 @@ exports.processSignUp = functions.auth.user().onCreate((user) => {
     .setCustomUserClaims(user.uid, {
       admin: customClaims.admin,
       'https://hasura.io/jwt/claims': {
-        'x-hasura-default-role': 'user',
-        'x-hasura-allowed-roles': ['user'],
+        'x-hasura-default-role': customClaims.admin ? 'admin' : 'user',
+        'x-hasura-allowed-roles': customClaims.admin ? ['user', 'admin'] : ['user'],
         'x-hasura-user-id': user.uid,
+        'x-hasura-project-id': user.uid,
       },
     })
     .then(() => {

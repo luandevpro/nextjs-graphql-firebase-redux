@@ -40,17 +40,17 @@ export default function ButtonAppBar() {
             </Typography>
           </Link>
           {currentUser ? (
-            <Link href="/profile">
+            <Link href="/account/profile">
               <Button color="inherit">{currentUser.displayName}</Button>
             </Link>
           ) : (
             <div>
-              {router.route === '/login' ? (
-                <Link href="/signup">
+              {router.route === '/account/login' ? (
+                <Link href="/account/signup">
                   <Button color="inherit">Signup</Button>
                 </Link>
               ) : (
-                <Link href="/login">
+                <Link href="/account/login">
                   <Button color="inherit">Login</Button>
                 </Link>
               )}

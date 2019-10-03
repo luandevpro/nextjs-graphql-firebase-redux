@@ -1,10 +1,8 @@
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import withLayout from '../lib/withLayout';
-import withApollo from '../lib/withApollo';
-import Login from '../components/Login';
-import LoginFacebook from '../components/SharedComponent/LoginFacebook';
-import LoginGoogle from '../components/SharedComponent/LoginGoogle';
+import withLayout from '../../lib/withLayout';
+import withApollo from '../../lib/withApollo';
+import Recovery from '../../components/Account/Recovery';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -25,10 +23,8 @@ function Index() {
   const classes = useStyles();
   return (
     <div className={classes.margin}>
-      <LoginFacebook />
-      <LoginGoogle />
       <Grid container justify="center" className={classes.root}>
-        <Login />
+        <Recovery />
       </Grid>
     </div>
   );

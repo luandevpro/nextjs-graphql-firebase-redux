@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { useSelector } from 'react-redux';
 import { ListItemStyled } from '../SharedStyled/ListItemStyled';
-import { auth, providerFacebook, providerGoogle } from '../../lib/firebase';
+import { auth, providerFacebook, providerGoogle } from '../../../lib/firebase';
 
 const useStyles = makeStyles(() => ({
   root: {

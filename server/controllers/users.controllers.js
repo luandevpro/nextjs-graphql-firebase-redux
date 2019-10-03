@@ -25,5 +25,5 @@ exports.login = async (req, res) => {
 
 exports.logout = async (req, res) => {
   await res.clearCookie('token');
-  return res.redirect('/login');
+  return res.redirect('/account/login');
 };

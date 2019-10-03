@@ -1,10 +1,10 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
-import Signup from '../components/Signup';
-import withLayout from '../lib/withLayout';
-import withApollo from '../lib/withApollo';
-import LoginFacebook from '../components/SharedComponent/LoginFacebook';
-import LoginGoogle from '../components/SharedComponent/LoginGoogle';
+import withLayout from '../../lib/withLayout';
+import withApollo from '../../lib/withApollo';
+import Signup from '../../components/Account/Signup';
+import LoginFacebook from '../../components/Account/SharedComponent/LoginFacebook';
+import LoginGoogle from '../../components/Account/SharedComponent/LoginGoogle';
 
 function Index(props) {
   return (

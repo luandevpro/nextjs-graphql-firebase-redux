@@ -1,18 +1,38 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Grid, Button } from '@material-ui/core';
+import PropTypes from 'prop-types';
 import TextInput from '../SharedComponent/TextInput';
-import { auth } from '../../lib/firebase';
+import { auth } from '../../../lib/firebase';
 
 export default function Login() {
   const handleSubmit = (values) => {
-    auth.signInWithEmailAndPassword(values.email, values.password);
+    auth.createUserWithEmailAndPassword(values.email, values.password).then(({ user }) => {
+      user.sendEmailVerification().then(() => {
+        console.log('verify email success');
+      });
+      user.updateProfile({
+        displayName: values.name,
+      });
+    });
   };
 
   return (
-    <Formik initialValues={{ email: '', password: '' }} onSubmit={handleSubmit}>
+    <Formik initialValues={{ name: '', email: '', password: '' }} onSubmit={handleSubmit}>
       {() => (
         <Form>
+          <Grid>
+            <Field
+              name="name"
+              component={TextInput}
+              label="Name"
+              type="name"
+              id="name"
+              width="375px"
+              variant="outlined"
+              placeholder="Enter your name"
+            />
+          </Grid>
           <Grid>
             <Field
               name="email"
@@ -39,7 +59,7 @@ export default function Login() {
           </Grid>
           <br />
           <Button style={{ width: '375px' }} variant="contained" color="primary" type="submit">
-            Đăng nhập
+            Đăng kí
           </Button>
         </Form>
       )}
@@ -47,6 +67,6 @@ export default function Login() {
   );
 }
 
-Login.getInitialProps = async () => {
-  return { isFromServer: true };
+Login.propTypes = {
+  apolloClient: PropTypes.object, // eslint-disable-line
 };
