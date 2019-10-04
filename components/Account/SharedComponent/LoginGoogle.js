@@ -3,7 +3,7 @@ import { Grid, ListItemIcon, Avatar, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { ListItemStyled } from '../SharedStyled/ListItemStyled';
-import { auth, providerGoogle } from '../../../lib/firebase';
+import { auth, providerGoogle, performance } from '../../../lib/firebase';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -22,12 +22,25 @@ const useStyles = makeStyles(() => ({
 
 export default function LoginGoogle() {
   const classes = useStyles();
+  const trace = performance && performance.trace('loginGoogle');
   const handleLoginGoogle = () => {
-    auth.signInWithPopup(providerGoogle).then(() => {
-      auth.currentUser.getIdToken(true).catch((error) => {
-        console.log(error);
+    trace.start();
+    auth
+      .signInWithPopup(providerGoogle)
+      .then(() => {
+        auth.currentUser
+          .getIdToken(true)
+          .then(() => {
+            trace.stop();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      })
+      .catch((error) => {
+        trace.putAttribute('errorCode', error.code);
+        trace.stop();
       });
-    });
   };
 
   return (

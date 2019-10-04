@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { useSelector } from 'react-redux';
 import { ListItemStyled } from '../SharedStyled/ListItemStyled';
-import { auth, providerFacebook, providerGoogle } from '../../../lib/firebase';
+import { auth, providerFacebook, providerGoogle, performance } from '../../../lib/firebase';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -23,14 +23,21 @@ const useStyles = makeStyles(() => ({
 
 export default function LoginFacebook() {
   const classes = useStyles();
+  const trace = performance && performance.trace('loginGoogle');
   const errorLogin = useSelector((state) => state.errorLogin);
   const handleLoginFacebook = () => {
+    trace.start();
     auth
       .signInWithPopup(providerFacebook)
       .then(() => {
-        auth.currentUser.getIdToken(true).catch((error) => {
-          console.log(error, 'error');
-        });
+        auth.currentUser
+          .getIdToken(true)
+          .then(() => {
+            trace.stop();
+          })
+          .catch((error) => {
+            console.log(error, 'error');
+          });
       })
       .catch((err) => {
         if (err.code === errorLogin) {
@@ -41,6 +48,8 @@ export default function LoginFacebook() {
           });
           console.log(err, 'err');
         }
+        trace.putAttribute('errorCode', err.code);
+        trace.stop();
       });
   };
 

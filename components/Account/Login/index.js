@@ -2,11 +2,21 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Grid, Button } from '@material-ui/core';
 import TextInput from '../SharedComponent/TextInput';
-import { auth } from '../../../lib/firebase';
+import { auth, performance } from '../../../lib/firebase';
 
 export default function Login() {
+  const trace = performance && performance.trace('userLoginEmail');
   const handleSubmit = (values) => {
-    auth.signInWithEmailAndPassword(values.email, values.password);
+    trace.start();
+    auth
+      .signInWithEmailAndPassword(values.email, values.password)
+      .then(() => {
+        trace.stop();
+      })
+      .catch((error) => {
+        trace.putAttribute('errorCode', error.code);
+        trace.stop();
+      });
   };
 
   return (

@@ -3,18 +3,27 @@ import { Formik, Form, Field } from 'formik';
 import { Grid, Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import TextInput from '../SharedComponent/TextInput';
-import { auth } from '../../../lib/firebase';
+import { auth, performance } from '../../../lib/firebase';
 
 export default function Login() {
+  const trace = performance && performance.trace('userSignupEmail');
   const handleSubmit = (values) => {
-    auth.createUserWithEmailAndPassword(values.email, values.password).then(({ user }) => {
-      user.sendEmailVerification().then(() => {
-        console.log('verify email success');
+    trace.start();
+    auth
+      .createUserWithEmailAndPassword(values.email, values.password)
+      .then(({ user }) => {
+        user.sendEmailVerification().then(() => {
+          console.log('verify email success');
+        });
+        user.updateProfile({
+          displayName: values.name,
+        });
+      })
+      .then(() => trace.stop())
+      .catch((error) => {
+        trace.putAttribute('errorCode', error.code);
+        trace.stop();
       });
-      user.updateProfile({
-        displayName: values.name,
-      });
-    });
   };
 
   return (
