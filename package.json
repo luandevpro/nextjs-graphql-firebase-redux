@@ -31,7 +31,7 @@
       "cookie-parser": "^1.4.4",
       "dotenv": "^8.0.0",
       "express": "^4.17.1",
-      "firebase": "^7.0.0",
+      "firebase": "^7.1.0",
       "firebase-admin": "^8.3.0",
       "formik": "^1.5.8",
       "graphql": "^14.4.2",

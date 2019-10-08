@@ -24,7 +24,11 @@ export default function LoginGoogle() {
   const classes = useStyles();
   const trace = performance && performance.trace('loginGoogle');
   const handleLoginGoogle = () => {
-    trace.start();
+    try {
+      trace.start();
+    } catch (error) {
+      console.error(error);
+    }
     auth
       .signInWithPopup(providerGoogle)
       .then(() => {
@@ -39,7 +43,11 @@ export default function LoginGoogle() {
       })
       .catch((error) => {
         trace.putAttribute('errorCode', error.code);
-        trace.stop();
+        try {
+          trace.stop();
+        } catch (err) {
+          console.error(err);
+        }
       });
   };
 

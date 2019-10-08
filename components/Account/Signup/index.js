@@ -8,7 +8,11 @@ import { auth, performance } from '../../../lib/firebase';
 export default function Login() {
   const trace = performance && performance.trace('userSignupEmail');
   const handleSubmit = (values) => {
-    trace.start();
+    try {
+      trace.start();
+    } catch (error) {
+      console.error(error);
+    }
     auth
       .createUserWithEmailAndPassword(values.email, values.password)
       .then(({ user }) => {
@@ -22,7 +26,11 @@ export default function Login() {
       .then(() => trace.stop())
       .catch((error) => {
         trace.putAttribute('errorCode', error.code);
-        trace.stop();
+        try {
+          trace.stop();
+        } catch (err) {
+          console.error(err);
+        }
       });
   };
 

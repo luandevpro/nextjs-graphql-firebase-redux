@@ -7,7 +7,11 @@ import { auth, performance } from '../../../lib/firebase';
 export default function Login() {
   const trace = performance && performance.trace('userLoginEmail');
   const handleSubmit = (values) => {
-    trace.start();
+    try {
+      trace.start();
+    } catch (error) {
+      console.error(error);
+    }
     auth
       .signInWithEmailAndPassword(values.email, values.password)
       .then(() => {
@@ -15,7 +19,11 @@ export default function Login() {
       })
       .catch((error) => {
         trace.putAttribute('errorCode', error.code);
-        trace.stop();
+        try {
+          trace.stop();
+        } catch (err) {
+          console.error(err);
+        }
       });
   };
 

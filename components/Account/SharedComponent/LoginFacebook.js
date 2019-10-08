@@ -26,7 +26,11 @@ export default function LoginFacebook() {
   const trace = performance && performance.trace('loginGoogle');
   const errorLogin = useSelector((state) => state.errorLogin);
   const handleLoginFacebook = () => {
-    trace.start();
+    try {
+      trace.start();
+    } catch (error) {
+      console.error(error);
+    }
     auth
       .signInWithPopup(providerFacebook)
       .then(() => {
@@ -49,7 +53,11 @@ export default function LoginFacebook() {
           console.log(err, 'err');
         }
         trace.putAttribute('errorCode', err.code);
-        trace.stop();
+        try {
+          trace.stop();
+        } catch (error) {
+          console.error(error);
+        }
       });
   };
 

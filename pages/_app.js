@@ -37,7 +37,7 @@ class MyApp extends App {
   }
 }
 
-export default withRedux(makeStore)(withApollo(MyApp));
+export default withRedux(makeStore)(withApollo(MyApp, { ssr: false }));
 
 MyApp.propTypes = {
    Component: PropTypes.func, // eslint-disable-line
