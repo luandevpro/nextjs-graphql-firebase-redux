@@ -15,7 +15,6 @@ exports.login = async (req, res) => {
             const options = {
               signed: true,
               path: '/',
-              domain: 'localhost',
               maxAge: expiresIn,
               httpOnly: true,
             };
