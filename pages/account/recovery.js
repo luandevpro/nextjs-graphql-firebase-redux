@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import withLayout from '../../lib/withLayout';
 import withApollo from '../../lib/withApollo';
 import Recovery from '../../components/Account/Recovery';
+import { withRedux } from '../../lib/withRedux';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -30,4 +31,4 @@ function Index() {
   );
 }
 
-export default withLayout(withApollo(Index, { logoutRequired: true }));
+export default withRedux(withLayout(withApollo(Index, { logoutRequired: true })));

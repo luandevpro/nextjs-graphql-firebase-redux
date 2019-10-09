@@ -6,6 +6,7 @@ import withApollo from '../../lib/withApollo';
 import Login from '../../components/Account/Login';
 import LoginFacebook from '../../components/Account/SharedComponent/LoginFacebook';
 import LoginGoogle from '../../components/Account/SharedComponent/LoginGoogle';
+import { withRedux } from '../../lib/withRedux';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -40,4 +41,4 @@ function Index() {
   );
 }
 
-export default withLayout(withApollo(Index, { logoutRequired: true }));
+export default withRedux(withLayout(withApollo(Index, { logoutRequired: true })));

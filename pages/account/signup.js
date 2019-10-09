@@ -5,6 +5,7 @@ import withApollo from '../../lib/withApollo';
 import Signup from '../../components/Account/Signup';
 import LoginFacebook from '../../components/Account/SharedComponent/LoginFacebook';
 import LoginGoogle from '../../components/Account/SharedComponent/LoginGoogle';
+import { withRedux } from '../../lib/withRedux';
 
 function Index(props) {
   return (
@@ -18,4 +19,4 @@ function Index(props) {
   );
 }
 
-export default withLayout(withApollo(Index, { logoutRequired: true }));
+export default withRedux(withLayout(withApollo(Index, { logoutRequired: true })));
