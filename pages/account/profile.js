@@ -6,6 +6,7 @@ import Axios from 'axios';
 import withApollo from '../../lib/withApollo';
 import withLayout from '../../lib/withLayout';
 import { auth } from '../../lib/firebase';
+import { withRedux } from '../../lib/withRedux';
 
 const Profile = () => {
   const currentUser = useSelector((state) => state.currentUser);
@@ -46,7 +47,7 @@ const Profile = () => {
   );
 };
 
-export default withLayout(withApollo(Profile, { loginRequired: true }));
+export default withRedux(withLayout(withApollo(Profile, { loginRequired: true })));
 
 Profile.propTypes = {
    user: PropTypes.object, // eslint-disable-line

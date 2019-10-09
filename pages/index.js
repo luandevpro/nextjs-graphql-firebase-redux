@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import withApollo from '../lib/withApollo';
 import withLayout from '../lib/withLayout';
 import { remoteConfig } from '../lib/firebase';
+import { withRedux } from '../lib/withRedux';
 
 const Index = () => {
   const userCurrentUser = useSelector((state) => state.currentUser);
@@ -36,7 +37,7 @@ const Index = () => {
   );
 };
 
-export default withLayout(withApollo(Index, { loginRequired: false }));
+export default withRedux(withLayout(withApollo(Index, { loginRequired: false })));
 
 Index.propTypes = {
    user: PropTypes.object, // eslint-disable-line
