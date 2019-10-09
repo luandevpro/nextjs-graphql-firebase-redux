@@ -2,24 +2,27 @@ const firebase = require('firebase-admin');
 
 exports.login = async (req, res) => {
   const { token } = req.body;
+  const expiresIn = 60 * 60 * 24 * 5 * 1000;
   firebase
     .auth()
-    .verifyIdToken(req.body.token)
-    .then((decodedToken) => {
-      if (decodedToken) {
-        const OPTION_COOKIES = {
-          signed: true,
-          path: '/',
-          domain: 'localhost',
-          maxAge: 60 * 60 * 1000,
-          httpOnly: true,
-        };
-        res.cookie('token', token, OPTION_COOKIES);
-        res.json({ token });
+    .verifyIdToken(token)
+    .then((decodedIdToken) => {
+      if (decodedIdToken) {
+        firebase
+          .auth()
+          .createSessionCookie(token, { expiresIn })
+          .then((sessionCookie) => {
+            const options = {
+              signed: true,
+              path: '/',
+              domain: 'localhost',
+              maxAge: expiresIn,
+              httpOnly: true,
+            };
+            res.cookie('token', sessionCookie, options);
+            res.json({ token });
+          });
       }
-    })
-    .catch((err) => {
-      console.log(err);
     });
 };
 
