@@ -29,6 +29,8 @@ exports.login = async (req, res) => {
 };
 
 exports.logout = (req, res) => {
-  res.clearCookie('token').sendStatus(200);
+  res.clearCookie('token', {
+    domain: publicRuntimeConfig.DOMAIN,
+  });
   res.redirect('/account/login');
 };
