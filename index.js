@@ -12,10 +12,12 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 const cookieParser = require('cookie-parser');
+const getConfig = require('next/config').default;
 const admin = require('firebase-admin');
 const sitemapAndRobots = require('./server/utils/sitemapAndRobots');
 const routes = require('./server/routes');
 
+const { publicRuntimeConfig } = getConfig();
 const serviceAccount = require('./lib/serviceAccountKey.json');
 
 admin.initializeApp({
@@ -45,7 +47,7 @@ app
     // get request express v4
     server.use(express.json());
     // secure cookie
-    server.use(cookieParser('coder9s'));
+    server.use(cookieParser(publicRuntimeConfig.SIGNED_COOKIE));
     // initial passport
     // create sitemap vs robots.txt
     sitemapAndRobots({ server });
@@ -55,7 +57,7 @@ app
 
     server.listen(port, (err) => {
       if (err) throw err;
-      console.log('> Ready on https://localhost:8080');
+      console.log('> Ready on http://localhost:8080');
     });
   })
   .catch((ex) => {

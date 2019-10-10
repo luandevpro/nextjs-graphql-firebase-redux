@@ -1,8 +1,11 @@
 const firebase = require('firebase-admin');
+const getConfig = require('next/config').default;
+
+const { publicRuntimeConfig } = getConfig();
 
 exports.login = async (req, res) => {
   const { token } = req.body;
-  const expiresIn = 60 * 60 * 24 * 5 * 1000;
+  const expiresIn = parseInt(publicRuntimeConfig.EXPIRES_IN, 10);
   firebase
     .auth()
     .verifyIdToken(token)
@@ -15,7 +18,7 @@ exports.login = async (req, res) => {
             const options = {
               signed: true,
               maxAge: expiresIn,
-              domain: 'nextjs-graphql-firebase-redux-zea5pv464a-uc.a.run.app',
+              domain: publicRuntimeConfig.DOMAIN.toString(),
               httpOnly: true,
             };
             res.cookie('token', sessionCookie, options);

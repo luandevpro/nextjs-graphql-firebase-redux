@@ -15,6 +15,8 @@ const Profile = () => {
       Axios({
         method: 'POST',
         url: '/auth/logout',
+        credentials: 'same-origin',
+        withCredentials: true,
         data: null,
       }).then((result) => {
         if (result.status === 200) {
