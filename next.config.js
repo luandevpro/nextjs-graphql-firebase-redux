@@ -10,7 +10,7 @@ const withEnv = {
     DOMAIN:
       process.env.NODE_ENV !== 'production'
         ? 'localhost'
-        : 'nextjs-graphql-firebase-redux-zea5pv464a-uc.a.run.app',
+        : 'nextjs-graphql-firebase-redux-zea5pv464a-an.a.run.app',
   },
 };
 
