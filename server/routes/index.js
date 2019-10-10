@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.route('/auth/login').post(userController.login);
 
-router.route('/auth/logout').get(userController.logout);
+router.route('/auth/logout').post(userController.logout);
 
 router.route('/api/upload').post(fileController.uploadSingle, fileController.uploadFile);
 

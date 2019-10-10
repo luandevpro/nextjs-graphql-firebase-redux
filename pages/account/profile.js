@@ -13,11 +13,13 @@ const Profile = () => {
   const handleLogout = () => {
     auth.signOut().then(() => {
       Axios({
-        method: 'GET',
+        method: 'POST',
         url: '/auth/logout',
         data: null,
-      }).then(() => {
-        window.location.href = '/account/login';
+      }).then((result) => {
+        if (result.status === 200) {
+          window.location.href = '/account/login';
+        }
       });
     });
   };
