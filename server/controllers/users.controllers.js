@@ -14,8 +14,8 @@ exports.login = async (req, res) => {
           .then((sessionCookie) => {
             const options = {
               signed: true,
-              path: '/',
               maxAge: expiresIn,
+              domain: 'nextjs-graphql-firebase-redux-zea5pv464a-uc.a.run.app',
               httpOnly: true,
             };
             res.cookie('token', sessionCookie, options);
